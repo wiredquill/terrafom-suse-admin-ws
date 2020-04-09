@@ -14,6 +14,7 @@ data "template_file" "register_scc" {
 
   vars = {
     caasp_registry_code = var.caasp_registry_code
+    we_registry_code    = var.we_registry_code
   }
 }
 
@@ -42,6 +43,8 @@ data "template_file" "commands" {
 
   vars = {
     packages = join(", ", var.packages)
+    patterns = join(", ", var.patterns)
+    root_password   = var.root_password
   }
 }
 
@@ -67,4 +70,3 @@ data "template_cloudinit_config" "cfg" {
     content      = data.template_file.cloud-init.rendered
   }
 }
-

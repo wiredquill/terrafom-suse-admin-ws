@@ -1,3 +1,4 @@
+
 resource "aws_vpc" "platform" {
   cidr_block           = var.vpc_cidr_block
   enable_dns_hostnames = true
@@ -46,7 +47,7 @@ resource "aws_internet_gateway" "platform" {
 resource "aws_subnet" "public" {
   availability_zone       = element(data.aws_availability_zones.az.names, 0)
   cidr_block              = var.public_subnet
-  depends_on              = [aws_main_route_table_association.main]
+//  depends_on              = [aws_main_route_table_association.main]
   map_public_ip_on_launch = true
 
   tags = merge(
@@ -105,51 +106,50 @@ resource "aws_route_table" "private" {
   )
 }
 
-resource "aws_route" "private_nat_gateway" {
-  route_table_id         = aws_route_table.private.id
-  destination_cidr_block = "0.0.0.0/0"
-  nat_gateway_id         = aws_nat_gateway.nat_gw.id
-}
+//resource "aws_route" "private_nat_gateway" {
+//  route_table_id         = aws_route_table.private.id
+//  destination_cidr_block = "0.0.0.0/0"
+//  nat_gateway_id         = aws_nat_gateway.nat_gw.id
+//}
 
-resource "aws_main_route_table_association" "main" {
-  route_table_id = aws_route_table.public.id
-  vpc_id         = aws_vpc.platform.id
-}
+//resource "aws_main_route_table_association" "main" {
+//  route_table_id = aws_route_table.public.id
+//  vpc_id         = aws_vpc.platform.id
+//}
 
-resource "aws_route_table_association" "private" {
-  route_table_id = aws_route_table.private.id
-  subnet_id      = aws_subnet.private.id
-}
+//resource "aws_route_table_association" "private" {
+//  route_table_id = aws_route_table.private.id
+//  subnet_id      = aws_subnet.private.id
+//}
 
 resource "aws_route_table_association" "public" {
   route_table_id = aws_route_table.public.id
   subnet_id      = aws_subnet.public.id
 }
 
-resource "aws_eip" "nat_eip" {
-  vpc        = true
-  depends_on = [aws_internet_gateway.platform]
+///resource "aws_eip" "nat_eip" {
+//  vpc        = true
+//  depends_on = [aws_internet_gateway.platform]
 
-  tags = merge(
-    local.tags,
-    {
-      "Name"  = "${var.stack_name}-eip-nat_eip"
-      "Class" = "ElasticIP"
-    },
-  )
-}
+//  tags = merge(
+//    local.tags,
+//    {
+//      "Name"  = "${var.stack_name}-eip-nat_eip"
+//      "Class" = "ElasticIP"
+//    },
+//  )
+//}
 
-resource "aws_nat_gateway" "nat_gw" {
-  allocation_id = aws_eip.nat_eip.id
-  subnet_id     = aws_subnet.public.id
-  depends_on    = [aws_eip.nat_eip]
-
-  tags = merge(
-    local.tags,
-    {
-      "Name"  = "${var.stack_name}-nat_gateway"
-      "Class" = "NatGateway"
-    },
-  )
-}
-
+//resource "aws_nat_gateway" "nat_gw" {
+//  allocation_id = aws_eip.nat_eip.id
+//  subnet_id     = aws_subnet.public.id
+//  depends_on    = [aws_eip.nat_eip]
+//
+//  tags = merge(
+//    local.tags,
+//    {
+//      "Name"  = "${var.stack_name}-nat_gateway"
+//      "Class" = "NatGateway"
+//    },
+//  )
+//}

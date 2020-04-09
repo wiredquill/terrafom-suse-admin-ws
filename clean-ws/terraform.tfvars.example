@@ -27,6 +27,15 @@ aws_secret_key = "ORd..."
 #
 # SUSE CaaSP Product Registration Code:
 #caasp_registry_code = ""
+
+
+## To register Workstation Edition product please use ONLY ONE of the following method
+# - register against SUSE Customer Service, with SUSE CaaSP Product Registration Code
+# - register against local SUSE Repository Mirroring Server
+#
+# SUSE Workstation Edition Product Registration Code:
+#ws_registry_code = ""
+
 #
 # SUSE Repository Mirroring Server Name (FQDN):
 #rmt_server_name = "rmt.example.com"
@@ -41,7 +50,7 @@ aws_secret_key = "ORd..."
 # This is required to have AWS CPI support working properly.
 #
 # Note well: you must  have the right set of permissions.
-# iam_profile_worker = "caasp-k8s-admin-vm-profile"
+# iam_profile_admin = "caasp-k8s-admin-vm-profile"
 
 
 

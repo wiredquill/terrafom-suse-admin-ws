@@ -11,22 +11,32 @@ resource "aws_security_group" "admin" {
     },
   )
 
-  # etcd - internal
+  # All Local - internal
   ingress {
-    from_port   = 2379
-    to_port     = 2380
-    protocol    = "tcp"
-    cidr_blocks = [var.vpc_cidr_block]
-    description = "etcd"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["10.0.0.0/8"]
+    description = "All Local traffic"
   }
+
+ # api-server - everywhere
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+    description = "RDP"
+  }
+
 
   # api-server - everywhere
   ingress {
-    from_port   = 22
-    to_port     = 23
+    from_port   = 3389
+    to_port     = 3389
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
-    description = "kubernetes api-server"
+    description = "RDP"
   }
 
     # everything outgoing - everywhere

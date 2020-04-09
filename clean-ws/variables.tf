@@ -1,5 +1,5 @@
 variable "stack_name" {
-  default     = "k8s"
+  default     = "skuba_ws"
   description = "identifier to make all your resources unique and avoid clashes with other users of this terraform project"
 }
 
@@ -70,25 +70,41 @@ variable "repositories" {
   description = "List of extra repositories (as maps with '<name>'='<url>') to add via cloud-init"
 }
 
+variable "patterns" {
+  type = list(string)
+  default = [
+    "yast2_basis",
+    "gnome_basic",
+  ]
+
+  description = "list of additional patterns to install"
+}
+
+
+
 variable "packages" {
   type = list(string)
-
   default = [
-    "git",
-    "-vim",
-    "-xrdp",
-    :-yast2-rdp
-    "-docker-runc",
-    "-docker-libnetwork",
+    "git-core",
+    "vim",
+    "nmap",
+    "xrdp",
+    "yast2-rdp",
+    "docker",
+    "vncmanager",
+    "xorg-x11",
+    "xorg-x11-fonts",
   ]
 
   description = "list of additional packages to install"
 }
 
+
 variable "caasp_registry_code" {
   default     = ""
   description = "SUSE CaaSP Product Registration Code"
 }
+
 
 variable "rmt_server_name" {
   default     = ""
@@ -110,4 +126,15 @@ variable "peer_vpc_ids" {
   type        = list(string)
   default     = []
   description = "IDs of a VPCs to connect to via a peering connection"
+}
+
+
+variable "we_registry_code" {
+  default     = "INTERNAL-USE-ONLY-c48e-dfaf"
+  description = "SUSE WorkStation Edition Product Registration Code"
+}
+
+variable "root_password" {
+  default     = "Sus3c22sp"
+  description = "Password for root"
 }
